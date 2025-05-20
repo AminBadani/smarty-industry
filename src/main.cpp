@@ -12,7 +12,7 @@
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_DISPLAY_RESET);
 
-PZEM004Tv30 pzem(Serial2, 16, 17); // Specify the serial port and the pins used for RX and TX
+// PZEM004Tv30 pzem(Serial2, 21, 22); // Specify the serial port and the pins used for RX and TX
 
 void setupDisplay() {
   // Wire.begin(DISPLAY_SDA_PIN, DISPLAY_SCL_PIN);
@@ -31,11 +31,15 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   setupDisplay();
+  pinMode(16, OUTPUT);
 
   Serial.println("Hello, ESP32!");
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(10); // this speeds up the simulation
+  digitalWrite(16, HIGH);
+  delay(1000); // this speeds up the simulation
+  digitalWrite(16, LOW);
+  delay(1000); // this speeds up the simulation
 }
