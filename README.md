@@ -1,6 +1,6 @@
 <h1>Sistem Monitoring dan Kontrol Daya Listrik</h1>
 
-<p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontoller ESP32 dan Google Firebase<p>
+<p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontoller ESP32 dan module PZEM-004T<p>
 
 ## Contributors 
 - Muhammad Asral - [@asral168](https://github.com/asral168)
