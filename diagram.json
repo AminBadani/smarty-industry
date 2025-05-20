@@ -12,6 +12,7 @@
       "attrs": {}
     },
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -105.6, "left": 504.04, "attrs": {} },
+    { "type": "chip-pzem-004t", "id": "chip1", "top": 116.22, "left": 129.6, "attrs": {} },
     {
       "type": "board-ssd1306",
       "id": "oled1",
@@ -58,7 +59,7 @@
     [ "esp:3V3", "bb2:1t.a", "red", [ "h0" ] ],
     [ "esp:5V", "bb2:17t.a", "red", [ "h0" ] ],
     [ "oled1:GND", "bb2:2t.e", "black", [ "v0" ] ],
-    [ "chip1:GND", "bb2:2t.d", "black", [ "h49.81", "v-153.6", "h124.8" ] ],
+    [ "chip1:GND", "bb2:2t.d", "black", [ "h49.81", "v-182.4", "h124.8" ] ],
     [ "chip1:VCC", "bb2:17t.e", "red", [ "h155.41", "v0", "h9.6" ] ],
     [ "oled1:VCC", "bb2:1t.e", "red", [ "v0" ] ],
     [ "bb2:17t.d", "relay1:VCC", "red", [ "h0", "v67.2" ] ],
@@ -72,8 +73,8 @@
     [ "led1:C", "relay1:COM", "green", [ "v0" ] ],
     [ "pot2:VCC", "bb2:17t.c", "red", [ "v48", "h66.4" ] ],
     [ "pot2:GND", "bb2:2t.b", "black", [ "v48", "h-48", "v-134.4", "h76.8" ] ],
-    [ "esp:12", "bb2:12t.a", "green", [ "v0", "h-67.05" ] ],
-    [ "pot2:SIG", "bb2:12t.e", "gray", [ "v57.6", "h-77.2", "v-268.8" ] ]
+    [ "esp:32", "bb2:6t.a", "violet", [ "h0" ] ],
+    [ "pot2:SIG", "bb2:6t.e", "violet", [ "v57.6", "h-77.2", "v-153.6", "h105.6", "v-172.8" ] ]
   ],
   "dependencies": {}
 }
