@@ -31,9 +31,9 @@
 ## Development
 ### Visual Studio Code
 #### Prerequisites
-1. Wokwi for VS Code Extension: IoT and Embedded System Simulator
-2. PlatformIO IDE for VS Code Extension: tool for embedded software development
-3. Git: version control system (opsional)
+1. [Wokwi for VS Code Extension](https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode): IoT and Embedded System Simulator
+2. [PlatformIO IDE for VS Code Extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide): tool for embedded software development
+3. [Git](https://git-scm.com/downloads): version control system (opsional)
 #### Deskripsi
 - Folder `src` berisi file `main.cpp` yang berisi kode program utama microcontroller
 - File `diagram.json` berisi komponen yang digunakan untuk simulasi serta koneksi (wiring) antar komponen menggunakan Wokwi
