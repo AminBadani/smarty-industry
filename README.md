@@ -22,8 +22,8 @@
 - **Pin NO** (normally open) pada `relay` dihubungkan dengan GND 
 - Relay menggunakan "High Trigger - Normally Open Mode", artinya ketika **Pin IN** berubah LOW maka lampu menjadi mati (off), sedangkan ketika **pin IN** berubah HIGH maka lampu menjadi hidup (on)
 #### Module OLED LCD i2C
-- **Pin SCL** (clock line: menyinkronkan transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 22** pada `ESP32`. Pada `ESP32`, pin **pin GPIO 22** adalah **pin SCL**
-- **Pin SDA** (data line: jalur transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 21** pada `ESP32`.  Pada `ESP32`, pin **pin GPIO 21** adalah **pin SDA**
+- **Pin SCL** (clock line: menyinkronkan transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 22** pada `ESP32`. Pada `ESP32`, **pin GPIO 22** adalah **pin SCL**
+- **Pin SDA** (data line: jalur transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 21** pada `ESP32`.  Pada `ESP32`, **pin GPIO 21** adalah **pin SDA**
 ### Wiring Diagram
 ![alt text](images/WIRING.png)
 
