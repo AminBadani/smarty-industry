@@ -14,7 +14,8 @@
 - Untuk penjelasan lebih lanjut mengenai Wokwi for VS Code bisa lihat pada https://docs.wokwi.com/vscode/getting-started 
 #### How To Run:
 - Pastikan sudah menginstall ekstensi Wokwi dan PlatformIO IDE pada VS Code
-- Buka file `diagram.json` lalu klik tombol hijau di pojok kiri atas untuk menjalankan simulasi
+- Lakukan `build` pada project dengan menekan `f1` > cari `PlatformIO: Build` > tekan enter untuk memulai proses build
+- Buka file `diagram.json` lalu klik tombol hijau di pojok kiri atas untuk menjalankan simulasi. Jika diminta untuk memasukkan lisensi kunjungi https://wokwi.com/license
 ### Troubleshoot
 #### Lisensi Wokwi for VS Code
 Kunjungi https://wokwi.com/license untuk mendapatkan lisensi Wokwi. Login menggunakan akun email (bisa pakai gmail). Jika sudah login, tekan tombol `Get License Key`. Selanjutnya copy lisensi. Buka VS Code dan tekan `f1` untuk memunculkan Command Pallete. Kemudian pada kolom pencarian ketik `Wokwi: Manually Enter License Key` lalu paste lisensi yang sudah di copy.
