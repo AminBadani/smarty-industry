@@ -19,12 +19,12 @@
 #### Module Relay 5V
 - **Pin IN** (signal input dari ESP32 ke Relay) pada `relay` dihubungkan dengan **pin GPIO 16** pada `ESP32`
 - **Pin COM** (common) pada `relay` dihubungkan dengan **pin A** (anode positive) pada `LED`
-- **Pin NO **(normally open) pada `relay` dihubungkan dengan GND 
+- **Pin NO** (normally open) pada `relay` dihubungkan dengan GND 
 - Relay menggunakan "High Trigger - Normally Open Mode", artinya ketika **Pin IN** berubah LOW maka lampu menjadi mati (off), sedangkan ketika **pin IN** berubah HIGH maka lampu menjadi hidup (on)
 #### Module OLED LCD i2C
 - **Pin SCL** (clock line: menyinkronkan transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 22** pada `ESP32`. Pada `ESP32`, pin **pin GPIO 22** adalah **pin SCL**
 - **Pin SDA** (data line: jalur transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 21** pada `ESP32`.  Pada `ESP32`, pin **pin GPIO 21** adalah **pin SDA**
-### Wiring
+### Wiring Diagram
 ![alt text](images/WIRING.png)
 
 
