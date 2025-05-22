@@ -2,7 +2,7 @@
 <p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontroller ESP32 dan module PZEM-004T<p>
 
 
-## Components
+## Simulation
 ### Komponen
 1. Microcontroller ESP32 DevkitC V4
 2. PZEM-004T (tidak ada di Wokwi) diganti dengan Potentiometer 
@@ -26,6 +26,8 @@
 - **Pin SDA** (data line: jalur transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 21** pada `ESP32`.  Pada `ESP32`, **pin GPIO 21** adalah **pin SDA**
 ### Wiring Diagram
 ![alt text](images/WIRING.png)
+### Dasboard
+![alt text](images/DASHBOARD.png)
 
 
 ## Development
