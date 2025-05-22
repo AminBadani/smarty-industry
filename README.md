@@ -1,4 +1,4 @@
-<h1>Sistem Monitoring dan Kontrol Daya Listrik</h1>
+<h1>Smart Industry</h1>
 <p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontroller ESP32 dan module PZEM-004T<p>
 
 
