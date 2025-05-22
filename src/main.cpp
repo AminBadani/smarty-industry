@@ -23,7 +23,8 @@ char ssid[] = "Wokwi-GUEST";                      // WiFi default di Wokwi
 char pass[] = "";
 
 float voltage1, current1, energy1, frequency1, power1; 
-bool hidup = true;
+float maxVoltage = 600, minVoltage = 0;     // Threshold tegangan untuk trigger relay
+bool hidup = true;                          // Kontrol on/off relay
 
 void setupDisplay() {
     display.begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADDRESS);
@@ -37,6 +38,7 @@ void setupDisplay() {
     delay(100);
 }
 
+// Baca data dari Blynk (tombol on/off)
 BLYNK_WRITE(V1) {
     // any code you place here will execute when the virtual pin value changes
     if (param.asInt() == 1) {
@@ -45,6 +47,18 @@ BLYNK_WRITE(V1) {
     else {
         hidup = false;
     }
+}
+
+// Baca data dari Blynk slider Maximum Voltage
+BLYNK_WRITE(V8) {
+    float pinValue = param.asFloat();
+    maxVoltage = pinValue;
+}
+
+// Baca data dari Blynk slider Minimum Voltage
+BLYNK_WRITE(V9) {
+    float pinValue = param.asFloat();
+    minVoltage = pinValue;
 }
 
 void updateBlynk(float v, float c, float e, float f, float p) {
@@ -79,7 +93,8 @@ void loop() {
 
     updateBlynk(voltage1, current1, energy1, frequency1, power1);
 
-    if (voltage1 >= 500 || hidup == false) {
+    // Cek tegangan untuk mengatur on/off relay
+    if (voltage1 >= maxVoltage || voltage1 <= minVoltage || hidup ==  false) {
         digitalWrite(16, LOW);
     } else {
         digitalWrite(16, HIGH);
