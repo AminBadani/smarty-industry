@@ -6,7 +6,6 @@
 #include <Adafruit_SSD1306.h> // Oled Display
 #include <PZEM004Tv30.h>      // Library PZEM-004T
 #include <BlynkSimpleEsp32.h> // Library blynk
-#include <WiFi.h>
 
 #define DISPLAY_ADDRESS 0x3C
 #define DISPLAY_SDA_PIN 21    // Pin SDA pada ESP32
