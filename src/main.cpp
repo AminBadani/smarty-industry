@@ -1,5 +1,5 @@
 #define BLYNK_TEMPLATE_ID "TMPL6yaLtgbMp"
-#define BLYNK_TEMPLATE_NAME "Quickstart Template"
+#define BLYNK_TEMPLATE_NAME "Smart Industry"
 
 #include <Wire.h>
 #include <Adafruit_GFX.h>     // Oled Display
@@ -9,72 +9,91 @@
 #include <WiFi.h>
 
 #define DISPLAY_ADDRESS 0x3C
-#define DISPLAY_SDA_PIN 21        // Pin SDA pada ESP32
-#define DISPLAY_SCL_PIN 22        // Pin SCL pada ESP32
-#define SCREEN_WIDTH 128          // OLED display width
-#define SCREEN_HEIGHT 64          // OLED display height
-#define OLED_DISPLAY_RESET -1     // Reset display OLED
+#define DISPLAY_SDA_PIN 21    // Pin SDA pada ESP32
+#define DISPLAY_SCL_PIN 22    // Pin SCL pada ESP32
+#define SCREEN_WIDTH 128      // OLED display width
+#define SCREEN_HEIGHT 64      // OLED display height
+#define OLED_DISPLAY_RESET -1 // Reset display OLED
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_DISPLAY_RESET);
 
 // PZEM004Tv30 pzem(Serial2, 21, 22); // Specify the serial port and the pins used for RX and TX
-char auth[] = "g1s1w7T1ULIMvqf0qLD2nl3gTK9O0ix_";  // Blynk auth token
-char ssid[] = "Wokwi-GUEST"; // WiFi default di Wokwi
+char auth[] = "qaYkcDyL43Zxh0oSMCq83MNS_h4VgLTN"; // Blynk auth token
+char ssid[] = "Wokwi-GUEST";                      // WiFi default di Wokwi
 char pass[] = "";
 
-float voltage1, current1, energy1, frequency1, power1;
+float voltage1, current1, energy1, frequency1, power1; 
+bool hidup = true;
 
 void setupDisplay() {
-  // Wire.begin(DISPLAY_SDA_PIN, DISPLAY_SCL_PIN);
-  display.begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADDRESS);
+    display.begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADDRESS);
 
-  display.clearDisplay();
-  display.setCursor(10, 0);
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.println("Hello World");
-  display.display();
-  delay(100);
+    display.clearDisplay();
+    display.setCursor(10, 0);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.println("Connecting...");
+    display.display();
+    delay(100);
+}
+
+BLYNK_WRITE(V1) {
+    // any code you place here will execute when the virtual pin value changes
+    if (param.asInt() == 1) {
+        hidup = true;
+    }
+    else {
+        hidup = false;
+    }
+}
+
+void updateBlynk(float v, float c, float e, float f, float p) {
+    Blynk.run();
+
+    Blynk.virtualWrite(V3, v);
+    Blynk.virtualWrite(V4, c);
+    Blynk.virtualWrite(V5, e);
+    Blynk.virtualWrite(V6, f);
+    Blynk.virtualWrite(V7, p);
 }
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  setupDisplay();
-  pinMode(16, OUTPUT);
-  Blynk.begin(auth, ssid, pass);
+    // put your setup code here, to run once:
+    Serial.begin(115200);
+    setupDisplay();
+    pinMode(16, OUTPUT);
+    Blynk.begin(auth, ssid, pass);
 
-  Serial.println("Hello, ESP32!");
+    Serial.println("Hello, ESP32!");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  Blynk.run();
+    // put your main code here, to run repeatedly:
 
-  voltage1 = analogRead(32);
-  current1 = 0;
-  energy1 = 0;
-  frequency1 = 0;
-  power1 = 0;
+    // Baca potentiometer
+    voltage1 = analogRead(32) / 4;
+    current1 = analogRead(32) / 5;
+    energy1 = analogRead(32) / 3;
+    frequency1 = analogRead(32) / 4;
+    power1 = (voltage1 * current1) / 100;
 
-  // Send data to blynk
-  Blynk.virtualWrite(V4, voltage1);
+    updateBlynk(voltage1, current1, energy1, frequency1, power1);
 
-  if (voltage1 >= 500) {
-    digitalWrite(16, LOW);
-  } else {
-    digitalWrite(16, HIGH);
-  }
+    if (voltage1 >= 500 || hidup == false) {
+        digitalWrite(16, LOW);
+    } else {
+        digitalWrite(16, HIGH);
+    }
 
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.printf("Voltage   : %.2f\ V \n", voltage1);
-  display.printf("Current   : %.2f\ A \n", current1);
-  display.printf("Energy    : %.2f\ kWh \n", energy1);
-  display.printf("Frequency : %.2f\ Hz \n", frequency1);
-  display.printf("Power     : %.2f\ W \n", power1);
-  display.display();
-  delay(2000);
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.printf("Voltage  : %.2f V\n", voltage1);
+    display.printf("Current  : %.2f A\n", current1);
+    display.printf("Energy   : %.2f kWh\n", energy1);
+    display.printf("Frequency: %.2f Hz\n", frequency1);
+    display.printf("Power    : %.2f W\n", power1);
+    display.display();
+    delay(2000);
 }
