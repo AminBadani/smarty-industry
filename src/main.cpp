@@ -1,3 +1,4 @@
+// Konfigurasi template id dan template name yang didapat dari Bylnk
 #define BLYNK_TEMPLATE_ID "TMPL6yaLtgbMp"
 #define BLYNK_TEMPLATE_NAME "Smart Industry"
 
@@ -7,7 +8,7 @@
 #include <PZEM004Tv30.h>      // Library PZEM-004T
 #include <BlynkSimpleEsp32.h> // Library blynk
 
-#define DISPLAY_ADDRESS 0x3C
+#define DISPLAY_ADDRESS 0x3C  // Alamat display untuk LCD
 #define DISPLAY_SDA_PIN 21    // Pin SDA pada ESP32
 #define DISPLAY_SCL_PIN 22    // Pin SCL pada ESP32
 #define SCREEN_WIDTH 128      // OLED display width
@@ -21,25 +22,31 @@ char auth[] = "qaYkcDyL43Zxh0oSMCq83MNS_h4VgLTN"; // Blynk auth token
 char ssid[] = "Wokwi-GUEST";                      // WiFi default di Wokwi
 char pass[] = "";
 
-float voltage1, current1, energy1, frequency1, power1; 
+float voltage1, current1, power1, frequency1, energy1 = 0; 
+unsigned long lastMillis = 0;               // Digunakan untuk simulasi energy kWh
 float maxVoltage = 600, minVoltage = 0;     // Threshold tegangan untuk trigger relay
 bool hidup = true;                          // Kontrol on/off relay
 
 void setupDisplay() {
+    // Konfigurasi alamat display
     display.begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADDRESS);
 
+    // Bersihkan display
     display.clearDisplay();
+    // Lokasi x = 10 dan y = 0 untuk output tulisan
     display.setCursor(10, 0);
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
+    // Tampilkan text
     display.println("Connecting...");
     display.display();
+    // Tunggu 100 ms untuk lanjut
     delay(100);
 }
 
 // Baca data dari Blynk (tombol on/off)
 BLYNK_WRITE(V1) {
-    // any code you place here will execute when the virtual pin value changes
+    // Baca virtual pin 1 (V1) yang digunakan berisi nilai 0 atau 1 dari Blynk
     if (param.asInt() == 1) {
         hidup = true;
     }
@@ -50,47 +57,63 @@ BLYNK_WRITE(V1) {
 
 // Baca data dari Blynk slider Maximum Voltage
 BLYNK_WRITE(V8) {
+    // Baca virtual pin 8 (V8) berisi nilai maximum voltage dari Blynk
     float pinValue = param.asFloat();
     maxVoltage = pinValue;
 }
 
 // Baca data dari Blynk slider Minimum Voltage
 BLYNK_WRITE(V9) {
+    // Baca virtual pin 9 (V9) berisi nilai maximum voltage dari Blynk
     float pinValue = param.asFloat();
     minVoltage = pinValue;
 }
 
-void updateBlynk(float v, float c, float e, float f, float p) {
+// Update data yang ada di Blynk sesuai dengan data pada ESP32
+// Mengirimkan data dari ESP32 ke Blynk
+void updateBlynk(float v, float c, float p, float f, float e) {
     Blynk.run();
 
+    // Tulis ke virtual pin yang sesuai
     Blynk.virtualWrite(V3, v);
     Blynk.virtualWrite(V4, c);
-    Blynk.virtualWrite(V5, e);
+    Blynk.virtualWrite(V5, p);
     Blynk.virtualWrite(V6, f);
-    Blynk.virtualWrite(V7, p);
+    Blynk.virtualWrite(V7, e);
 }
 
 void setup() {
     // put your setup code here, to run once:
     Serial.begin(115200);
     setupDisplay();
+    // Pin 16 digunakan untuk mengirimkan instruksi dari ESP32 ke relay
     pinMode(16, OUTPUT);
+    // Jalankan blynk sesuai auth, ssid, dan pass
     Blynk.begin(auth, ssid, pass);
-
     Serial.println("Hello, ESP32!");
 }
 
 void loop() {
     // put your main code here, to run repeatedly:
 
-    // Baca potentiometer
-    voltage1 = analogRead(32) / 4;
-    current1 = analogRead(32) / 5;
-    energy1 = analogRead(32) / 3;
-    frequency1 = analogRead(32) / 4;
-    power1 = (voltage1 * current1) / 100;
+    float rawPot = analogRead(32); // Baca potentiometer
+    float voltPot = rawPot * (3.3 / 4095.0); // Data voltage dari pot
 
-    updateBlynk(voltage1, current1, energy1, frequency1, power1);
+    // Simulasikan data volt, curr, en, freq, dan pow dari potentiometer
+    voltage1 = map(rawPot, 0, 4095, 0, 240);    // Simulate 0–240V
+    current1 = map(rawPot, 0, 4095, 0, 10);     // Simulate 0–10A
+    power1 = voltage1 * current1;               // Simulated Watts
+
+    // Frekuensi tidak bisa disimulasikan karena 'digital timing-based signal'             
+    frequency1 = 0; 
+
+    // Simulasikan energy kWh
+    unsigned long currentMillis = millis();
+    float hoursElapsed = (currentMillis - lastMillis) / 3600000.0; // ms to hours 
+    energy1 += (power1 / 1000.0) * hoursElapsed; // kWh = W × h
+
+    // Update data pada dashboard bylnk
+    updateBlynk(voltage1, current1, power1, frequency1, energy1);
 
     // Cek tegangan untuk mengatur on/off relay
     if (voltage1 >= maxVoltage || voltage1 <= minVoltage || hidup ==  false) {
@@ -99,15 +122,16 @@ void loop() {
         digitalWrite(16, HIGH);
     }
 
+    // Tampilkan data listrik ke OLED LCD i2C
     display.clearDisplay();
     display.setCursor(0, 0);
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
     display.printf("Voltage  : %.2f V\n", voltage1);
     display.printf("Current  : %.2f A\n", current1);
-    display.printf("Energy   : %.2f kWh\n", energy1);
-    display.printf("Frequency: %.2f Hz\n", frequency1);
     display.printf("Power    : %.2f W\n", power1);
+    display.printf("Frequency: %.2f Hz\n", frequency1);
+    display.printf("Energy   : %.2f kWh\n", energy1);
     display.display();
-    delay(2000);
+    delay(200);
 }
