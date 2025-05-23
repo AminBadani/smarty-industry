@@ -1,5 +1,5 @@
 <h1>Smart Industry</h1>
-<p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontroller ESP32 dan module PZEM-004T<p>
+<p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontroller ESP32 dan module PZEM-004T menggunakan simulasi Wokwi dan Blynk dashboard<p>
 
 ## Table of contents
 1. [Simulation](#simulation)
