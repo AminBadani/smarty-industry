@@ -1,6 +1,18 @@
 <h1>Smart Industry</h1>
 <p>Sistem monitoring dan kontrol daya listrik berbasis IoT menggunakan microcontroller ESP32 dan module PZEM-004T<p>
 
+## Table of contents
+1. [Simulation](#simulation)
+   1. [Komponen](#komponen)
+   2. [Deskripsi](#deskripsi)
+   3. [Wiring Diagram](#wiring-diagram)
+   4. [Dashboard](#dashboard)
+2. [Development](#development)
+   1. [Visual Studio Code](#visual-studio-code)
+      1. [Prerequisites](#prerequisites)
+      2. [Deskripsi](#deskripsi)
+      3. [How to run](#how-to-run)
+    2. [Troubleshoot](#troubleshoot)
 
 ## Simulation
 ### Komponen
@@ -26,7 +38,7 @@
 - **Pin SDA** (data line: jalur transfer data) pada `OLED LCD i2c` dihubungkan dengan **pin GPIO 21** pada `ESP32`.  Pada `ESP32`, **pin GPIO 21** adalah **pin SDA**
 ### Wiring Diagram
 ![alt text](images/WIRING.png)
-### Dasboard
+### Dashboard
 ![alt text](images/DASHBOARD.png)
 
 
