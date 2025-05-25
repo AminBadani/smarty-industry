@@ -1,5 +1,5 @@
 // Konfigurasi template id dan template name yang didapat dari Bylnk
-#define BLYNK_TEMPLATE_ID "TMPL6yaLtgbMp"
+#define BLYNK_TEMPLATE_ID "TMPL60Dxjwv1S"
 #define BLYNK_TEMPLATE_NAME "Smart Industry"
 
 #include <Wire.h>
@@ -18,7 +18,7 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_DISPLAY_RESET);
 
 // PZEM004Tv30 pzem(Serial2, 21, 22); // Specify the serial port and the pins used for RX and TX
-char auth[] = "qaYkcDyL43Zxh0oSMCq83MNS_h4VgLTN"; // Blynk auth token
+char auth[] = "ekzWMzu6s673XC5z2x8k_DoE8BUpIPmp"; // Blynk auth token
 char ssid[] = "Wokwi-GUEST";                      // WiFi default di Wokwi
 char pass[] = "";
 
@@ -45,8 +45,8 @@ void setupDisplay() {
 }
 
 // Baca data dari Blynk (tombol on/off)
-BLYNK_WRITE(V1) {
-    // Baca virtual pin 1 (V1) yang digunakan berisi nilai 0 atau 1 dari Blynk
+BLYNK_WRITE(V0) {
+    // Baca virtual pin 0 (V0) yang digunakan berisi nilai 0 atau 1 dari Blynk
     if (param.asInt() == 1) {
         hidup = true;
     }
@@ -56,15 +56,15 @@ BLYNK_WRITE(V1) {
 }
 
 // Baca data dari Blynk slider Maximum Voltage
-BLYNK_WRITE(V8) {
-    // Baca virtual pin 8 (V8) berisi nilai maximum voltage dari Blynk
+BLYNK_WRITE(V1) {
+    // Baca virtual pin 1 (V1) berisi nilai maximum voltage dari Blynk
     float pinValue = param.asFloat();
     maxVoltage = pinValue;
 }
 
 // Baca data dari Blynk slider Minimum Voltage
-BLYNK_WRITE(V9) {
-    // Baca virtual pin 9 (V9) berisi nilai maximum voltage dari Blynk
+BLYNK_WRITE(V2) {
+    // Baca virtual pin 2 (V2) berisi nilai maximum voltage dari Blynk
     float pinValue = param.asFloat();
     minVoltage = pinValue;
 }
@@ -100,8 +100,8 @@ void loop() {
     float voltPot = rawPot * (3.3 / 4095.0); // Data voltage dari pot
 
     // Simulasikan data volt, curr, en, freq, dan pow dari potentiometer
-    voltage1 = map(rawPot, 0, 4095, 0, 240);    // Simulate 0–240V
-    current1 = map(rawPot, 0, 4095, 0, 10);     // Simulate 0–10A
+    voltage1 = map(rawPot, 0, 4095, 0, 240);    // Simulate 0-240V
+    current1 = map(rawPot, 0, 4095, 0, 10);     // Simulate 0-10A
     power1 = voltage1 * current1;               // Simulated Watts
 
     // Frekuensi tidak bisa disimulasikan karena 'digital timing-based signal'             
