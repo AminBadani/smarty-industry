@@ -12,7 +12,6 @@
       "attrs": {}
     },
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -105.6, "left": 504.04, "attrs": {} },
-    { "type": "chip-pzem-004t", "id": "chip1", "top": 116.22, "left": 129.6, "attrs": {} },
     {
       "type": "board-ssd1306",
       "id": "oled1",
