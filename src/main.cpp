@@ -110,6 +110,10 @@ void loop() {
     // // toLow = simulasi 0V 
     // // toHigh = simulasi 240V
     voltage1 = map(rawPot, 0, 4095, 0, 240);    // Simulate 0-240V
+    // // // Ketika rawPot = 0, maka voltage1 = 0
+    // // // Ketika rawpot = 4095, maka voltage1 = 240
+    // // // Ketika rawpot = 2047, maka voltage1 = 120
+    
     current1 = map(rawPot, 0, 4095, 0, 10);     // Simulate 0-10A
     power1 = voltage1 * current1;               // Simulated Watts
 
