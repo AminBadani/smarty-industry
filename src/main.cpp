@@ -97,9 +97,18 @@ void loop() {
     // put your main code here, to run repeatedly:
 
     float rawPot = analogRead(32); // Baca potentiometer
+    // Jika VCC = 0V, maka 0.
+    // Jika VCC = 3.3V, maka 4095.
+    // Jika VCC = 1.65V, maka 2047
     float voltPot = rawPot * (3.3 / 4095.0); // Data voltage dari pot
 
     // Simulasikan data volt, curr, en, freq, dan pow dari potentiometer
+    // map(value, fromLow, fromHigh, toLow, toHigh)
+    // // rawPot = data dari potentiometer
+    // // fromLow = data minimum potentiometer
+    // // fromHigh = data maksimum potentiometer
+    // // toLow = simulasi 0V 
+    // // toHigh = simulasi 240V
     voltage1 = map(rawPot, 0, 4095, 0, 240);    // Simulate 0-240V
     current1 = map(rawPot, 0, 4095, 0, 10);     // Simulate 0-10A
     power1 = voltage1 * current1;               // Simulated Watts
